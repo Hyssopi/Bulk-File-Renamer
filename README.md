@@ -24,15 +24,20 @@ Bulk file renaming program.
 Recommended equivalent shortcut: `node main.js "%USERPROFILE%/Desktop/TestRenameFolder/"`.  
 This will generate a `renameList.csv` file in the main project `Bulk-File-Renamer` folder.
 
-6. Open `renameList.csv` located in the main project `Bulk-File-Renamer` folder. The left column is the *before* file path to rename. The right column is the *after* new file path that you want to rename to.  
-Modify the right column and save changes.  
+6. Open `renameList.csv` located in the main project `Bulk-File-Renamer` folder.  
+a. The **first** column is the directory path of the file.  
+b. The **second** column is the *before* file name to rename.  
+c. The **third** column is the *after* new file name that you want to rename to.<br>  
+Modify the third/right column and save changes.  
 Recommended to use a spreadsheet application and open with separated by `tab` options.
 
     <img src="images/renameList.png" width="500">
 
 7. When `renameList.csv` is ready, run `node main.js continue` to start renaming the files listed in the `renameList.csv`.
 
-8. The renaming program should loop through the `renameList.csv` file and rename the left column file paths to the right column file paths.
+8. The renaming program should rename the files based on the `renameList.csv` file.
+
+9. The output log `renameList.log` is written to the main project `Bulk-File-Renamer` folder.
 
 ## Test
 (None)

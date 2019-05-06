@@ -5,6 +5,7 @@ const utilities = require('./util/utilities');
 const WEEK_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const CSV_DELIMITER = '\t';
 const CSV_PATH = './renameList.csv';
+const LOG_PATH = './renameList.log';
 
 // Read input arguments from user
 let argument = process.argv[2];
@@ -17,24 +18,36 @@ if (argument && argument.toLowerCase() === 'continue')
   {
     let csvInput = utilities.readTextFile(CSV_PATH).split('\n');
     let successfulRenameCount = 0;
+    let outputLogEntries = [];
     // Looping by CSV input lines
     for (let i = 0; i < csvInput.length; i++)
     {
       if (csvInput[i] === '')
       {
-        console.debug('Index: ' + i + ', CSV input line is empty, skipping: ' + csvInput[i]);
+        //console.debug('Index: ' + i + ', CSV input line is empty, skipping: ' + csvInput[i]);
         continue;
       }
       
       // Need to remove '\r' char which gets added when CSV file is modified by spreadsheet
       let csvInputSplit = csvInput[i].replace(/\r/g, '').split(CSV_DELIMITER);
-      let oldPath = csvInputSplit[0];
-      let newPath = csvInputSplit[1];
-      utilities.renamePath(oldPath, newPath);
-      console.log('Index: ' + i + ', oldPath: ' + oldPath + ', newPath: ' + newPath);
+      let oldPathDirectoryPath = csvInputSplit[0];
+      let oldPathFileName = csvInputSplit[1];
+      let newPathFileName = csvInputSplit[2];
+      utilities.renamePath(oldPathDirectoryPath + oldPathFileName, oldPathDirectoryPath + newPathFileName);
+      
+      let logEntry =
+      {
+        "entry": (i + 1),
+        "directoryPath": oldPathDirectoryPath,
+        "oldFileName": oldPathFileName,
+        "newFileName": newPathFileName
+      };
+      console.log(logEntry);
+      outputLogEntries.push(logEntry);
       ++successfulRenameCount;
     }
     console.log('Renaming done. ' + successfulRenameCount + ' files renamed.');
+    utilities.writeToFile(LOG_PATH, JSON.stringify(outputLogEntries, null, 2))
   }
   else
   {
@@ -56,7 +69,7 @@ else if (utilities.isPathExist(argument))
     // Note: File extensions with multiple periods are not supported. For example: ".tar.gz".
     let fileExtension = filePaths[i].fileName.split('.').pop();
     
-    let oldPath = filePaths[i].directoryPath + filePaths[i].fileName;
+    let oldPath = filePaths[i].directoryPath + CSV_DELIMITER + filePaths[i].fileName;
     // Sample format of new file name: C:/Users/t/Desktop/TestRenameFolder/2019-05-05_(Sun)_1557052760157_0001.txt
     let newFileName = '';
     newFileName += creationDate.getFullYear();
@@ -70,9 +83,9 @@ else if (utilities.isPathExist(argument))
     newFileName += (i < 100) ? '0' : '';
     newFileName += (i < 10) ? '0' : '';
     newFileName += (i + 1);
-    let newPath = filePaths[i].directoryPath + newFileName + '.' + fileExtension;
+    newFileName += '.' + fileExtension;
     
-    csvOutput += oldPath + CSV_DELIMITER + newPath + '\n';
+    csvOutput += oldPath + CSV_DELIMITER + newFileName + '\n';
   }
   utilities.writeToFile(CSV_PATH, csvOutput);
 }
