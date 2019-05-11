@@ -65,7 +65,7 @@ else if (utilities.isPathExist(argument))
   
   for (let i = 0; i < filePaths.length; i++)
   {
-    let creationDate = new Date(utilities.getPathCreationDate(filePaths[i].directoryPath + filePaths[i].fileName));
+    let creationDate = new Date(utilities.getPathCreationTime(filePaths[i].directoryPath + filePaths[i].fileName));
     // Note: File extensions with multiple periods are not supported. For example: ".tar.gz".
     let fileExtension = filePaths[i].fileName.split('.').pop();
     

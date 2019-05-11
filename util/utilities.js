@@ -119,16 +119,16 @@ function isDirectory(path)
 utilities.isDirectory = isDirectory;
 
 /**
- * Gets the creation date in milliseconds since epoch time of the file or directory.
+ * Gets the creation time in milliseconds since epoch time of the file or directory.
  *
  * @param path Path of the file or directory
- * @return Creation date in milliseconds since epoch time of the file or directory
+ * @return Creation time in milliseconds since epoch time of the file or directory
  */
-function getPathCreationDate(path)
+function getPathCreationTime(path)
 {
-  return fs.statSync(path).ctimeMs;
+  return fs.statSync(path).birthtimeMs;
 }
-utilities.getPathCreationDate = getPathCreationDate;
+utilities.getPathCreationTime = getPathCreationTime;
 
 /**
  * Rename file or directory.
