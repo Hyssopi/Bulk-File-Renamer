@@ -93,7 +93,7 @@ else
 {
   console.error('Error: Input directory path is invalid.');
   console.error('For usage, for example:');
-  console.error('node main.js "C:/Users/USERNAME/Desktop/TestRenameFolder');
+  console.error('node main.js "C:/Users/USERNAME/Desktop/TestRenameFolder"');
   console.error('node main.js "%USERPROFILE%/Desktop/TestRenameFolder/"');
   console.error('node main.js continue');
 }
