@@ -65,19 +65,19 @@ else if (utilities.isPathExist(argument))
   
   for (let i = 0; i < filePaths.length; i++)
   {
-    let creationDate = new Date(utilities.getPathCreationTime(filePaths[i].directoryPath + filePaths[i].fileName));
+    let modifiedDate = new Date(utilities.getPathModifiedTime(filePaths[i].directoryPath + filePaths[i].fileName));
     // Note: File extensions with multiple periods are not supported. For example: ".tar.gz".
     let fileExtension = filePaths[i].fileName.split('.').pop();
     
     let oldPath = filePaths[i].directoryPath + CSV_DELIMITER + filePaths[i].fileName;
     // Sample format of new file name: C:/Users/t/Desktop/TestRenameFolder/2019-05-05_(Sun)_1557052760157_0001.txt
     let newFileName = '';
-    newFileName += creationDate.getFullYear();
+    newFileName += modifiedDate.getFullYear();
     newFileName += '-';
-    newFileName += ((creationDate.getMonth() + 1) < 10) ? ('0' + (creationDate.getMonth() + 1)) : (creationDate.getMonth() + 1);
+    newFileName += ((modifiedDate.getMonth() + 1) < 10) ? ('0' + (modifiedDate.getMonth() + 1)) : (modifiedDate.getMonth() + 1);
     newFileName += '-';
-    newFileName += (creationDate.getDate() < 10) ? ('0' + creationDate.getDate()) : creationDate.getDate();
-    newFileName += '_(' + WEEK_NAMES[creationDate.getDay()] + ')_' + creationDate.getTime();
+    newFileName += (modifiedDate.getDate() < 10) ? ('0' + modifiedDate.getDate()) : modifiedDate.getDate();
+    newFileName += '_(' + WEEK_NAMES[modifiedDate.getDay()] + ')_' + modifiedDate.getTime();
     newFileName += '_';
     newFileName += (i < 1000) ? '0' : '';
     newFileName += (i < 100) ? '0' : '';

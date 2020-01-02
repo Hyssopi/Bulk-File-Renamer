@@ -131,6 +131,18 @@ function getPathCreationTime(path)
 utilities.getPathCreationTime = getPathCreationTime;
 
 /**
+ * Gets the modified time in milliseconds since epoch time of the file or directory.
+ *
+ * @param path Path of the file or directory
+ * @return Modified time in milliseconds since epoch time of the file or directory
+ */
+function getPathModifiedTime(path)
+{
+  return fs.statSync(path).mtimeMs;
+}
+utilities.getPathModifiedTime = getPathModifiedTime;
+
+/**
  * Rename file or directory.
  *
  * @param oldPath Path to rename
